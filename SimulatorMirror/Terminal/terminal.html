@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/css/xterm.min.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #0d1117; }
+  #terminal { width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="terminal"></div>
+<script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/lib/xterm.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.10.0/lib/addon-fit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@xterm/addon-webgl@0.18.0/lib/addon-webgl.min.js"></script>
+<script>
+var MIN_COLS = 80;
+var MAX_FONT = 14;
+var MIN_FONT = 7;
+
+function calcFontSize(family) {
+    var width = document.getElementById('terminal').clientWidth || window.innerWidth;
+    var span = document.createElement('span');
+    span.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;';
+    span.style.fontFamily = family;
+    span.textContent = 'MMMMMMMMMM';
+    document.body.appendChild(span);
+    var best = MIN_FONT;
+    for (var s = MAX_FONT; s >= MIN_FONT; s--) {
+        span.style.fontSize = s + 'px';
+        if (Math.floor(width / (span.offsetWidth / 10)) >= MIN_COLS) { best = s; break; }
+    }
+    document.body.removeChild(span);
+    return best;
+}
+
+var fontFamily = 'Menlo, Courier, monospace';
+var fontSize = calcFontSize(fontFamily);
+
+var term = new Terminal({
+    cursorBlink: true,
+    fontSize: fontSize,
+    fontFamily: fontFamily,
+    scrollback: 10000,
+    allowProposedApi: true,
+    theme: {
+        background: '#0d1117',
+        foreground: '#c9d1d9',
+        cursor: '#58a6ff',
+        cursorAccent: '#0d1117',
+        selectionBackground: 'rgba(56,139,253,0.3)',
+        black:   '#484f58',
+        red:     '#ff7b72',
+        green:   '#3fb950',
+        yellow:  '#d29922',
+        blue:    '#58a6ff',
+        magenta: '#bc8cff',
+        cyan:    '#39d353',
+        white:   '#b1bac4',
+        brightBlack:   '#6e7681',
+        brightRed:     '#ffa198',
+        brightGreen:   '#56d364',
+        brightYellow:  '#e3b341',
+        brightBlue:    '#79c0ff',
+        brightMagenta: '#d2a8ff',
+        brightCyan:    '#56d364',
+        brightWhite:   '#f0f6fc'
+    }
+});
+
+// Size terminal for keyboard-up state so content is never hidden behind keyboard.
+// ~55% of initial height matches the available space above the keyboard on most iPhones.
+var container = document.getElementById('terminal');
+container.style.height = Math.round(window.innerHeight * 0.55) + 'px';
+
+var fitAddon = new FitAddon.FitAddon();
+term.loadAddon(fitAddon);
+term.open(container);
+
+var webglAddon = new WebglAddon.WebglAddon();
+webglAddon.onContextLoss(function() { webglAddon.dispose(); });
+try { term.loadAddon(webglAddon); } catch(e) {}
+
+// Single fit to the pre-sized container — never refits
+fitAddon.fit();
+
+term.onData(function(data) {
+    window.webkit.messageHandlers.terminalInput.postMessage(btoa(unescape(encodeURIComponent(data))));
+});
+
+term.onBinary(function(data) {
+    window.webkit.messageHandlers.terminalInput.postMessage(btoa(data));
+});
+
+term.onResize(function(size) {
+    window.webkit.messageHandlers.terminalResize.postMessage(
+        JSON.stringify({ cols: size.cols, rows: size.rows })
+    );
+});
+
+function b64ToBytes(b) {
+    var s = atob(b), a = new Uint8Array(s.length);
+    for (var i = 0; i < s.length; i++) a[i] = s.charCodeAt(i);
+    return a;
+}
+
+function writeData(base64) { term.write(b64ToBytes(base64)); }
+function fitTerminal() { /* no-op — avoid WebGL resize artifacts */ }
+
+// Send raw key from native accessory bar
+function sendRawKey(base64) {
+    var bytes = b64ToBytes(base64);
+    // Write locally for immediate feedback and send to connection
+    window.webkit.messageHandlers.terminalInput.postMessage(base64);
+}
+
+window.webkit.messageHandlers.terminalReady.postMessage(
+    JSON.stringify({ cols: term.cols, rows: term.rows })
+);
+</script>
+</body>
+</html>

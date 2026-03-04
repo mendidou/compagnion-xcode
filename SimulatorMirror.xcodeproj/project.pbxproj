@@ -6,8 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		BB0000032F54392C008D13F4 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = BB0000022F54392C008D13F4 /* SwiftTerm */; };
+		CC0000012F543930008D13F4 /* NIOCore in Frameworks */ = {isa = PBXBuildFile; productRef = CC0000002F543930008D13F4 /* NIOCore */; };
+		CC0000032F543930008D13F4 /* NIOPosix in Frameworks */ = {isa = PBXBuildFile; productRef = CC0000022F543930008D13F4 /* NIOPosix */; };
+		CC0000052F543930008D13F4 /* NIOSSH in Frameworks */ = {isa = PBXBuildFile; productRef = CC0000042F543930008D13F4 /* NIOSSH */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		50B530F32F54392C008D13F4 /* SimulatorMirror.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimulatorMirror.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAAA00012F54392C008D13F4 /* SimulatorMirrorServer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimulatorMirrorServer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +24,26 @@
 			path = SimulatorMirror;
 			sourceTree = "<group>";
 		};
+		AAAA00062F54392C008D13F4 /* SimulatorMirrorServer */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SimulatorMirrorServer;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		50B530F02F54392C008D13F4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB0000032F54392C008D13F4 /* SwiftTerm in Frameworks */,
+				CC0000012F543930008D13F4 /* NIOCore in Frameworks */,
+				CC0000032F543930008D13F4 /* NIOPosix in Frameworks */,
+				CC0000052F543930008D13F4 /* NIOSSH in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAAA00032F54392C008D13F4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				50B530F52F54392C008D13F4 /* SimulatorMirror */,
+				AAAA00062F54392C008D13F4 /* SimulatorMirrorServer */,
 				50B530F42F54392C008D13F4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				50B530F32F54392C008D13F4 /* SimulatorMirror.app */,
+				AAAA00012F54392C008D13F4 /* SimulatorMirrorServer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -65,9 +91,35 @@
 			);
 			name = SimulatorMirror;
 			packageProductDependencies = (
+				BB0000022F54392C008D13F4 /* SwiftTerm */,
+				CC0000002F543930008D13F4 /* NIOCore */,
+				CC0000022F543930008D13F4 /* NIOPosix */,
+				CC0000042F543930008D13F4 /* NIOSSH */,
 			);
 			productName = SimulatorMirror;
 			productReference = 50B530F32F54392C008D13F4 /* SimulatorMirror.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AAAA00052F54392C008D13F4 /* SimulatorMirrorServer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AAAA00092F54392C008D13F4 /* Build configuration list for PBXNativeTarget "SimulatorMirrorServer" */;
+			buildPhases = (
+				AAAA00022F54392C008D13F4 /* Sources */,
+				AAAA00032F54392C008D13F4 /* Frameworks */,
+				AAAA00042F54392C008D13F4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AAAA00062F54392C008D13F4 /* SimulatorMirrorServer */,
+			);
+			name = SimulatorMirrorServer;
+			packageProductDependencies = (
+			);
+			productName = SimulatorMirrorServer;
+			productReference = AAAA00012F54392C008D13F4 /* SimulatorMirrorServer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -83,6 +135,9 @@
 					50B530F22F54392C008D13F4 = {
 						CreatedOnToolsVersion = 16.2;
 					};
+					AAAA00052F54392C008D13F4 = {
+						CreatedOnToolsVersion = 16.2;
+					};
 				};
 			};
 			buildConfigurationList = 50B530EE2F54392C008D13F4 /* Build configuration list for PBXProject "SimulatorMirror" */;
@@ -94,12 +149,18 @@
 			);
 			mainGroup = 50B530EA2F54392C008D13F4;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				BB0000012F54392C008D13F4 /* XCRemoteSwiftPackageReference "SwiftTerm" */,
+				CC0000062F543930008D13F4 /* XCRemoteSwiftPackageReference "swift-nio" */,
+				CC0000072F543930008D13F4 /* XCRemoteSwiftPackageReference "swift-nio-ssh" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 50B530F42F54392C008D13F4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				50B530F22F54392C008D13F4 /* SimulatorMirror */,
+				AAAA00052F54392C008D13F4 /* SimulatorMirrorServer */,
 			);
 		};
 /* End PBXProject section */
@@ -112,10 +173,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AAAA00042F54392C008D13F4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		50B530EF2F54392C008D13F4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAAA00022F54392C008D13F4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -251,30 +326,19 @@
 				DEVELOPMENT_TEAM = HV66MCNZGJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				EXCLUDED_SOURCE_FILE_NAMES = Info.plist;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SimulatorMirror/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = SimulatorMirror.SimulatorMirror;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 2.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -290,30 +354,65 @@
 				DEVELOPMENT_TEAM = HV66MCNZGJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				EXCLUDED_SOURCE_FILE_NAMES = Info.plist;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SimulatorMirror/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = SimulatorMirror.SimulatorMirror;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 2.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AAAA00072F54392C008D13F4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SimulatorMirrorServer/SimulatorMirrorServer.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HV66MCNZGJ;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = SimulatorMirror.SimulatorMirrorServer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		AAAA00082F54392C008D13F4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SimulatorMirrorServer/SimulatorMirrorServer.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HV66MCNZGJ;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = SimulatorMirror.SimulatorMirrorServer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -338,7 +437,66 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		AAAA00092F54392C008D13F4 /* Build configuration list for PBXNativeTarget "SimulatorMirrorServer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAAA00072F54392C008D13F4 /* Debug */,
+				AAAA00082F54392C008D13F4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BB0000012F54392C008D13F4 /* XCRemoteSwiftPackageReference "SwiftTerm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/migueldeicaza/SwiftTerm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		CC0000062F543930008D13F4 /* XCRemoteSwiftPackageReference "swift-nio" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-nio.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		CC0000072F543930008D13F4 /* XCRemoteSwiftPackageReference "swift-nio-ssh" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-nio-ssh.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BB0000022F54392C008D13F4 /* SwiftTerm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BB0000012F54392C008D13F4 /* XCRemoteSwiftPackageReference "SwiftTerm" */;
+			productName = SwiftTerm;
+		};
+		CC0000002F543930008D13F4 /* NIOCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC0000062F543930008D13F4 /* XCRemoteSwiftPackageReference "swift-nio" */;
+			productName = NIOCore;
+		};
+		CC0000022F543930008D13F4 /* NIOPosix */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC0000062F543930008D13F4 /* XCRemoteSwiftPackageReference "swift-nio" */;
+			productName = NIOPosix;
+		};
+		CC0000042F543930008D13F4 /* NIOSSH */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC0000072F543930008D13F4 /* XCRemoteSwiftPackageReference "swift-nio-ssh" */;
+			productName = NIOSSH;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 50B530EB2F54392C008D13F4 /* Project object */;
 }
