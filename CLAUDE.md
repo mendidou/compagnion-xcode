@@ -58,6 +58,32 @@ Two Xcode targets in one project (Xcode 16, `PBXFileSystemSynchronizedRootGroup`
 - **Local MJPEG**: `http://<ip>:8080/stream`
 - **Both local and relay run in parallel**: `useRelay` activates only when local delivers no frames
 
+## Pitfalls & Gotchas
+
+### Terminal — DO NOT:
+- Call `fitAddon.fit()` more than once — causes white horizontal lines on iOS 3x (WebGL canvas resize artifacts). `fitTerminal()` is a no-op on purpose.
+- Add HTML-side keyboard handling (`visualViewport`, `position: fixed`, shift-up) — conflicts with native `keyboardLayoutGuide`. Let Swift handle keyboard.
+- Use the DOM renderer for TUI apps — box-drawing characters render at wrong widths. WebGL with `customGlyphs` is required.
+- Use `unicode11` addon — causes character width mismatch.
+- Resize the terminal after initial fit — any `term.resize()` or repeated `fit()` triggers lines.
+
+### Terminal — DO:
+- Pre-calculate font size with DOM measurement before creating Terminal
+- Size the terminal container to ~55% of viewport height before fitting (keyboard-safe)
+- Keep `fitTerminal()` as a no-op in terminal.html
+- Set `TERM=xterm-256color` and `COLORTERM=truecolor` in the server PTY environment
+
+### Relay — DO NOT:
+- Set `RelayManager.isConnected = true` before first successful receive
+- Auto-start relay when local Bonjour server is discovered
+- Let `RelayClient` retry indefinitely — cap at 3 consecutive failures
+
+### General:
+- `PBXFileSystemSynchronizedRootGroup` means new Swift files are auto-included — no pbxproj edits needed
+- `FrameBuffer` is an actor — always `await` its methods
+- `RelayManager` is `@MainActor` — UI updates are safe but call from main thread
+- `CloudKitPublisher.swift` / `CloudKitDiscovery.swift` exist but are dead code (free dev account limitation)
+
 ## Development Notes
 
 - **Team**: `HV66MCNZGJ` (free Apple Developer account)
