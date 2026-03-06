@@ -156,6 +156,7 @@ final class TerminalViewController: UIViewController, WKScriptMessageHandler {
     private var isConnected = true
     private var ctrlActive = false
     private var ctrlButton: UIButton?
+    private var shimmerView: TerminalShimmerView?
 
     var onDismiss: (() -> Void)?
     var onSessionDied: (() -> Void)?
@@ -166,6 +167,7 @@ final class TerminalViewController: UIViewController, WKScriptMessageHandler {
         self.connection = connection
         super.init(nibName: nil, bundle: nil)
         modalPresentationStyle = .fullScreen
+        startConnection()  // Set handlers immediately so no early data is lost
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -236,7 +238,15 @@ final class TerminalViewController: UIViewController, WKScriptMessageHandler {
             webView.loadFileURL(htmlURL, allowingReadAccessTo: htmlURL.deletingLastPathComponent())
         }
 
-        startConnection()
+        let sv = TerminalShimmerView()
+        view.addSubview(sv)
+        NSLayoutConstraint.activate([
+            sv.topAnchor.constraint(equalTo: webView.topAnchor),
+            sv.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+            sv.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+            sv.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
+        ])
+        shimmerView = sv
     }
 
     @objc private func closeTerminal() {
@@ -392,6 +402,10 @@ final class TerminalViewController: UIViewController, WKScriptMessageHandler {
             pendingData.append(data)
             return
         }
+        if let sv = shimmerView {
+            sv.dismiss()
+            shimmerView = nil
+        }
         let base64 = data.base64EncodedString()
         webView.evaluateJavaScript("writeData('\(base64)')", completionHandler: nil)
     }
@@ -458,6 +472,70 @@ final class TerminalViewController: UIViewController, WKScriptMessageHandler {
             connection.onDisconnect = nil
             connection.disconnect()
         }
+    }
+}
+
+// MARK: - Shimmer Loading View
+
+final class TerminalShimmerView: UIView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = UIColor(red: 0.051, green: 0.067, blue: 0.09, alpha: 1)
+        setupContent()
+    }
+
+    required init?(coder: NSCoder) { fatalError() }
+
+    private func setupContent() {
+        let label = UILabel()
+        label.text = "Connecting…"
+        label.textColor = UIColor(white: 0.35, alpha: 1)
+        label.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(label)
+
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 9
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(stack)
+
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            stack.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 14),
+            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+        ])
+
+        let widths: [CGFloat] = [0.45, 0.72, 0.88, 0.55, 0.80, 0.63, 0.90, 0.42, 0.76, 0.58]
+        for (i, w) in widths.enumerated() {
+            let row = UIView()
+            row.backgroundColor = UIColor(white: 0.2, alpha: 1)
+            row.layer.cornerRadius = 3
+            row.translatesAutoresizingMaskIntoConstraints = false
+            stack.addArrangedSubview(row)
+            NSLayoutConstraint.activate([
+                row.widthAnchor.constraint(equalTo: stack.widthAnchor, multiplier: w),
+                row.heightAnchor.constraint(equalToConstant: 13),
+            ])
+            UIView.animate(
+                withDuration: 0.8,
+                delay: Double(i) * 0.07,
+                options: [.repeat, .autoreverse, .allowUserInteraction]
+            ) {
+                row.alpha = 0.2
+            }
+        }
+    }
+
+    func dismiss() {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.alpha = 0
+        }, completion: { _ in
+            self.removeFromSuperview()
+        })
     }
 }
 
